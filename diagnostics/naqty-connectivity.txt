@@ -1,5 +1,5 @@
 Naqty Onim connectivity diagnostics (NO codes or credentials sent)
-Run timestamp: 2026-11-05T20:20:29Z
+Run timestamp: 2026-11-05T20:21:25Z
 
 --- DNS: mobile-app.prod.markirovka.ismet.kz ---
 88.204.202.151  STREAM mobile-app.prod.markirovka.ismet.kz
@@ -20,6 +20,12 @@ curl failed to verify the legitimacy of the server and therefore could not
 establish a secure connection to it. To learn more about this situation and
 how to fix it, please visit the webpage mentioned above.
 HTTP_STATUS=000 REMOTE_IP= SSL_VERIFY=1
+
+--- POST invalid synthetic identifier /api/v3/check (no real goods) ---
+HTTP/2 400 
+server: nginx
+content-type: application/json
+Response body size (bytes): 259
 
 --- CORS preflight OPTIONS /api/v3/check ---
 HTTP/2 403 
