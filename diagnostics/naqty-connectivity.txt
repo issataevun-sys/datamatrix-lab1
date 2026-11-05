@@ -1,5 +1,5 @@
 Naqty Onim connectivity diagnostics (NO codes or credentials sent)
-Run timestamp: 2026-11-05T20:23:51Z
+Run timestamp: 2026-11-05T20:32:51Z
 
 --- DNS: mobile-app.prod.markirovka.ismet.kz ---
 88.204.202.151  STREAM mobile-app.prod.markirovka.ismet.kz
@@ -27,14 +27,21 @@ server: nginx
 content-type: application/json
 Response body size (bytes): 259
 Validation response (synthetic code only):
-{"category":"unknown","checkDate":1793910235866,"checkResult":false,"correlationId":"17ca553a6f1c27672272384a08d31154","errorCode":"method_argument_not_valid","message":"Ошибка валидации запроса","messageKey":"method_argument_not_valid"}
+{"category":"unknown","checkDate":1793910775056,"checkResult":false,"correlationId":"de32be4b11260a5188d3ac0930ebe7d0","errorCode":"method_argument_not_valid","message":"Ошибка валидации запроса","messageKey":"method_argument_not_valid"}
 
 --- POST minimal JSON with synthetic identifier ---
 HTTP/2 400 
 server: nginx
 content-type: application/json
 Minimal response:
-{"category":"unknown","checkDate":1793910237087,"checkResult":false,"correlationId":"829983a79ee526194339f45cafc5b48b","errorCode":"method_argument_not_valid","message":"Ошибка валидации запроса","messageKey":"method_argument_not_valid"}
+{"category":"unknown","checkDate":1793910776218,"checkResult":false,"correlationId":"09adde2ef9aaf5964e646059cbfdd3a0","errorCode":"method_argument_not_valid","message":"Ошибка валидации запроса","messageKey":"method_argument_not_valid"}
+
+--- POST APK-matched data_matrix request using SYNTHETIC 29-character value ---
+HTTP/2 404 
+server: nginx
+content-type: application/json
+APK-matched synthetic response:
+{"category":"tobacco","checkDate":1793910778005,"checkResult":false,"code":"00000000000000000000000000000","correlationId":"88c25332aa33965dcd8004d376c8938b","errorCode":"code_not_found","message":"Код не найден","messageKey":"code_not_found"}
 
 --- CORS preflight OPTIONS /api/v3/check ---
 HTTP/2 403 
