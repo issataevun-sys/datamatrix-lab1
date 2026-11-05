@@ -28,7 +28,7 @@ jobs:
             done
             echo
             echo "--- CORS preflight OPTIONS /api/v3/check ---"
-            curl -sSi -X OPTIONS --connect-timeout 8 --max-time 15 -H 'Origin: https://issataevun-sys.github.io' -H 'Access-Control-Request-Method: POST' -H 'Access-Control-Request-Headers: content-type' 'https://mobile-app.prod.markirovka.ismet.kz/api/v3/check' 2>&1 | head -55 || true
+            curl -sSi -X OPTIONS --connect-timeout 8 --max-time 15 -H 'Origin: https://issataevun-sys.github.io' -H 'Access-Control-Request-Method: POST' -H 'Access-Control-Request-Headers: content-type' 'https://mobile-app.prod.markirovka.ismet.kz/api/v3/check' 2>&1 | grep -Ei '^(HTTP/|access-control-|content-type:|server:|curl:)' | head -25 || true
           } > diagnostics/naqty-connectivity.txt
           cat diagnostics/naqty-connectivity.txt
       - name: Commit diagnostics into public test repository
