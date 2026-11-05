@@ -1,0 +1,11 @@
+{
+  "name": "Data Matrix Lab — Cocktail Room",
+  "short_name": "DM Lab",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#111318",
+  "theme_color": "#111318",
+  "description": "Standalone camera test for GS1 Data Matrix codes",
+  "icons": []
+}
