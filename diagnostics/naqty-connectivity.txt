@@ -1,5 +1,5 @@
 Naqty Onim connectivity diagnostics (NO codes or credentials sent)
-Run timestamp: 2026-11-05T20:21:25Z
+Run timestamp: 2026-11-05T20:22:24Z
 
 --- DNS: mobile-app.prod.markirovka.ismet.kz ---
 88.204.202.151  STREAM mobile-app.prod.markirovka.ismet.kz
@@ -26,6 +26,8 @@ HTTP/2 400
 server: nginx
 content-type: application/json
 Response body size (bytes): 259
+Validation response (synthetic code only):
+{"category":"unknown","checkDate":1793910149752,"checkResult":false,"correlationId":"56b81b6983d811f88e403f04f475e093","errorCode":"method_argument_not_valid","message":"Ошибка валидации запроса","messageKey":"method_argument_not_valid"}
 
 --- CORS preflight OPTIONS /api/v3/check ---
 HTTP/2 403 
