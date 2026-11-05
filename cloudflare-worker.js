@@ -60,9 +60,9 @@ export default {
     let input;
     try { input = await request.json(); } catch { return json({error:'bad_json'},400,origin); }
     const code = input && typeof input.code === 'string' ? input.code : '';
-    // Only 29-character consumer tobacco packs, excluding other product groups.
-    if (code.length !== 29 || !/^\d{14}[\s\S]{15}$/.test(code))
-      return json({error:'expected_29_character_tobacco_code'},400,origin);
+    // Only 21-character tobacco identification codes or full 29-character tobacco codes, excluding other product groups.
+    if (![21,29].includes(code.length) || !/^\d{14}[\s\S]{7,15}$/.test(code))
+      return json({error:'expected_21_or_29_character_tobacco_code'},400,origin);
     const controller = new AbortController();
     const timer = setTimeout(()=>controller.abort(),13000);
     try {
