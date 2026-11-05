@@ -4,30 +4,40 @@ on:
     paths:
       - '.github/workflows/diagnose-naqty.yml'
   workflow_dispatch:
+permissions:
+  contents: write
 jobs:
   diagnose:
     runs-on: ubuntu-latest
-    timeout-minutes: 3
+    timeout-minutes: 4
     steps:
-      - name: DNS lookup (no codes transmitted)
+      - uses: actions/checkout@v4
+      - name: Check DNS HTTPS and CORS without sending codes
         shell: bash
         run: |
-          echo "=== DNS main mobile API ==="
-          getent ahosts mobile-app.prod.markirovka.ismet.kz || true
-          echo "=== DNS auxiliary frontend domain ==="
-          getent ahosts mobile-app.prodg.markirovka.ismet.kz || true
-      - name: HTTPS reachability (no codes transmitted)
+          mkdir -p diagnostics
+          {
+            echo "Naqty Onim connectivity diagnostics (NO codes or credentials sent)"
+            echo "Run timestamp: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            for host in mobile-app.prod.markirovka.ismet.kz mobile-app.prodg.markirovka.ismet.kz; do
+              echo
+              echo "--- DNS: $host ---"
+              getent ahostsv4 "$host" | head -3 || true
+              echo "--- HTTPS HEAD: $host ---"
+              curl -sSIL -o /dev/null -w 'HTTP_STATUS=%{http_code} REMOTE_IP=%{remote_ip} SSL_VERIFY=%{ssl_verify_result}\n' --connect-timeout 8 --max-time 15 "https://$host/" 2>&1 || true
+            done
+            echo
+            echo "--- CORS preflight OPTIONS /api/v3/check ---"
+            curl -sSi -X OPTIONS --connect-timeout 8 --max-time 15 -H 'Origin: https://issataevun-sys.github.io' -H 'Access-Control-Request-Method: POST' -H 'Access-Control-Request-Headers: content-type' 'https://mobile-app.prod.markirovka.ismet.kz/api/v3/check' 2>&1 | head -55 || true
+          } > diagnostics/naqty-connectivity.txt
+          cat diagnostics/naqty-connectivity.txt
+      - name: Commit diagnostics into public test repository
         shell: bash
         run: |
-          for host in mobile-app.prod.markirovka.ismet.kz mobile-app.prodg.markirovka.ismet.kz; do
-            echo "=== $host ==="
-            curl -sSI -L --max-time 12 --retry 0 "https://$host/" 2>&1 | head -35 || true
-          done
-      - name: CORS preflight for public test site (no codes transmitted)
-        shell: bash
-        run: |
-          curl -si -X OPTIONS --max-time 12 \
-            -H 'Origin: https://issataevun-sys.github.io' \
-            -H 'Access-Control-Request-Method: POST' \
-            -H 'Access-Control-Request-Headers: content-type' \
-            'https://mobile-app.prod.markirovka.ismet.kz/api/v3/check' 2>&1 | head -55 || true
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add diagnostics/naqty-connectivity.txt
+          if ! git diff --cached --quiet; then
+            git commit -m "Record Naqty server reachability report (no marking codes)"
+            git push origin HEAD:main
+          fi
