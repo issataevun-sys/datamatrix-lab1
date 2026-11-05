@@ -49,6 +49,36 @@ export default {
         }),{status:502,headers:{'Content-Type':'application/json','Cache-Control':'no-store'}});
       }finally{clearTimeout(timeout);}
     }
+    if (request.method==='GET' && route==='/probe') {
+      // Synthetic test only: no real pack code is sent.
+      const controller=new AbortController();
+      const timer=setTimeout(()=>controller.abort(),10000);
+      try {
+        const response=await fetch(UPSTREAM,{
+          method:'POST',
+          headers:{'Content-Type':'application/json','Accept':'application/json'},
+          body:JSON.stringify({
+            code:'00000000000000000000000000000',
+            codeType:'data_matrix',mode:'SCAN',persistScanResult:false
+          }),
+          signal:controller.signal,
+          redirect:'manual'
+        });
+        const data=await response.json().catch(()=>null);
+        return new Response(JSON.stringify({
+          worker:'ok',postHttpStatus:response.status,
+          upstreamErrorCode:data?.errorCode||null,
+          upstreamCategory:data?.category||null,
+          redirected:response.status>=300&&response.status<400
+        }),{headers:{'Content-Type':'application/json','Cache-Control':'no-store'}});
+      }catch(e){
+        return new Response(JSON.stringify({
+          worker:'ok',post:'failed',name:e?.name||null,
+          diagnostic:String(e?.message||e).slice(0,250),
+          cause:String(e?.cause?.message||'').slice(0,250)
+        }),{status:502,headers:{'Content-Type':'application/json','Cache-Control':'no-store'}});
+      }finally{clearTimeout(timer)}
+    }
     const origin = request.headers.get('Origin') || '';
     // Only calls from our test UI; no arbitrary cross-origin browser usage.
     if (!ALLOWED_ORIGINS.has(origin)) return json({error:'origin_not_allowed'},403,origin);
@@ -71,8 +101,7 @@ export default {
         headers: {'Content-Type':'application/json','Accept':'application/json'},
         body:JSON.stringify({code,codeType:'data_matrix',mode:'SCAN',persistScanResult:false}),
         signal:controller.signal,
-        redirect:'error',
-        cf:{cacheTtl:0,cacheEverything:false}
+        redirect:'manual'
       });
       const responseBody = await result.text();
       if(responseBody.length>120000) return json({error:'upstream_response_too_large'},502,origin);
