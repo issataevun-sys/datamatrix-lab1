@@ -27,6 +27,11 @@ jobs:
               curl -sSIL -o /dev/null -w 'HTTP_STATUS=%{http_code} REMOTE_IP=%{remote_ip} SSL_VERIFY=%{ssl_verify_result}\n' --connect-timeout 8 --max-time 15 "https://$host/" 2>&1 || true
             done
             echo
+            echo "--- POST invalid synthetic identifier /api/v3/check (no real goods) ---"
+            curl -sS -o /tmp/naqty-post-body.txt -D /tmp/naqty-post-headers.txt -X POST --connect-timeout 8 --max-time 15 -H 'Content-Type: application/json' -H 'Accept: application/json' --data '{"code":"000000000000000000000","rawCode":"000000000000000000000","group01":"00000000000000","group21":"0000000","isGs1DataCarrier":true,"persistScanResult":false}' 'https://mobile-app.prod.markirovka.ismet.kz/api/v3/check' 2>&1 || true
+            grep -Ei '^(HTTP/|www-authenticate:|content-type:|server:|location:)' /tmp/naqty-post-headers.txt | head -12 || true
+            echo "Response body size (bytes): $(wc -c </tmp/naqty-post-body.txt)"
+            echo
             echo "--- CORS preflight OPTIONS /api/v3/check ---"
             curl -sSi -X OPTIONS --connect-timeout 8 --max-time 15 -H 'Origin: https://issataevun-sys.github.io' -H 'Access-Control-Request-Method: POST' -H 'Access-Control-Request-Headers: content-type' 'https://mobile-app.prod.markirovka.ismet.kz/api/v3/check' 2>&1 | grep -Ei '^(HTTP/|access-control-|content-type:|server:|curl:)' | head -25 || true
           } > diagnostics/naqty-connectivity.txt
