@@ -42,6 +42,13 @@ jobs:
             head -c 1200 /tmp/naqty-min-body.txt
             echo
             echo
+            echo "--- POST APK-matched data_matrix request using SYNTHETIC 29-character value ---"
+            curl -sS -o /tmp/naqty-dm-body.txt -D /tmp/naqty-dm-headers.txt -X POST --connect-timeout 8 --max-time 15 -H 'Content-Type: application/json' -H 'Accept: application/json' --data '{"code":"00000000000000000000000000000","codeType":"data_matrix","mode":"SCAN","persistScanResult":false}' 'https://mobile-app.prod.markirovka.ismet.kz/api/v3/check' 2>&1 || true
+            grep -Ei '^(HTTP/|www-authenticate:|content-type:|server:)' /tmp/naqty-dm-headers.txt | head -8 || true
+            echo "APK-matched synthetic response:"
+            head -c 1000 /tmp/naqty-dm-body.txt
+            echo
+            echo
             echo "--- CORS preflight OPTIONS /api/v3/check ---"
             curl -sSi -X OPTIONS --connect-timeout 8 --max-time 15 -H 'Origin: https://issataevun-sys.github.io' -H 'Access-Control-Request-Method: POST' -H 'Access-Control-Request-Headers: content-type' 'https://mobile-app.prod.markirovka.ismet.kz/api/v3/check' 2>&1 | grep -Ei '^(HTTP/|access-control-|content-type:|server:|curl:)' | head -25 || true
           } > diagnostics/naqty-connectivity.txt
