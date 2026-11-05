@@ -1,5 +1,5 @@
 Naqty Onim connectivity diagnostics (NO codes or credentials sent)
-Run timestamp: 2026-11-05T20:20:07Z
+Run timestamp: 2026-11-05T20:20:29Z
 
 --- DNS: mobile-app.prod.markirovka.ismet.kz ---
 88.204.202.151  STREAM mobile-app.prod.markirovka.ismet.kz
@@ -24,17 +24,3 @@ HTTP_STATUS=000 REMOTE_IP= SSL_VERIFY=1
 --- CORS preflight OPTIONS /api/v3/check ---
 HTTP/2 403 
 server: nginx
-date: Thu, 05 Nov 2026 20:20:11 GMT
-x-request-id: 040bd500b1a24158d0980841dfa96152
-vary: Origin
-vary: Access-Control-Request-Method
-vary: Access-Control-Request-Headers
-x-content-type-options: nosniff
-x-xss-protection: 0
-cache-control: no-cache, no-store, max-age=0, must-revalidate
-pragma: no-cache
-expires: 0
-strict-transport-security: max-age=31536000 ; includeSubDomains
-x-frame-options: DENY
-
-Invalid CORS request
