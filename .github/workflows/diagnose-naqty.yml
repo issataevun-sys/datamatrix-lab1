@@ -1,0 +1,33 @@
+name: Diagnose Naqty Onim server
+on:
+  push:
+    paths:
+      - '.github/workflows/diagnose-naqty.yml'
+  workflow_dispatch:
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: DNS lookup (no codes transmitted)
+        shell: bash
+        run: |
+          echo "=== DNS main mobile API ==="
+          getent ahosts mobile-app.prod.markirovka.ismet.kz || true
+          echo "=== DNS auxiliary frontend domain ==="
+          getent ahosts mobile-app.prodg.markirovka.ismet.kz || true
+      - name: HTTPS reachability (no codes transmitted)
+        shell: bash
+        run: |
+          for host in mobile-app.prod.markirovka.ismet.kz mobile-app.prodg.markirovka.ismet.kz; do
+            echo "=== $host ==="
+            curl -sSI -L --max-time 12 --retry 0 "https://$host/" 2>&1 | head -35 || true
+          done
+      - name: CORS preflight for public test site (no codes transmitted)
+        shell: bash
+        run: |
+          curl -si -X OPTIONS --max-time 12 \
+            -H 'Origin: https://issataevun-sys.github.io' \
+            -H 'Access-Control-Request-Method: POST' \
+            -H 'Access-Control-Request-Headers: content-type' \
+            'https://mobile-app.prod.markirovka.ismet.kz/api/v3/check' 2>&1 | head -55 || true
