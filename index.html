@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#111318"><link rel="manifest" href="./manifest.webmanifest"><title>Data Matrix Lab</title><style>
 :root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color-scheme:dark;background:#111318;color:#f6f7f8}*{box-sizing:border-box}body{margin:0}.wrap{max-width:640px;margin:auto;padding:28px 16px 70px}h1{font-size:29px;letter-spacing:-.04em;margin:4px 0 10px}h3{margin:0 0 14px}p{color:#abb0ba;line-height:1.5}.card{background:#22252b;border-radius:20px;padding:17px;margin:15px 0}.view{position:relative;aspect-ratio:4/3;background:#060709;border-radius:14px;overflow:hidden;display:grid;place-items:center}video{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}.guide{width:54%;aspect-ratio:1;border:2px solid #ffffffaa;border-radius:15px;position:absolute;pointer-events:none}.hint{color:#9ba1aa;text-align:center;font-size:13px}.buttons{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}button,.upload{border:0;border-radius:12px;background:#3a404b;color:white;padding:12px 15px;font-weight:650;font-size:14px;cursor:pointer;flex:1;min-height:45px;text-align:center}.primary{background:#e7e9ed;color:#111}.small{font-size:12px}textarea{width:100%;min-height:85px;border:1px solid #444a54;border-radius:12px;background:#14171b;color:white;padding:11px;font:12px/1.5 ui-monospace,monospace;resize:vertical}.status{font-size:13px;color:#b0bed0;margin-top:12px;overflow-wrap:anywhere}.pair{padding:10px 0;border-bottom:1px solid #3b414b}.key{display:block;color:#aeb5c0;font-size:12px;margin-bottom:4px}.val{font:13px/1.5 ui-monospace,monospace;overflow-wrap:anywhere}.warning{color:#ffcf8a;background:#3c3126;border-radius:12px;padding:12px;font-size:12px;line-height:1.5}input[type=file]{display:none}
-.verified{background:#076e52;color:white;border-radius:12px;padding:14px 16px;font-weight:750;font-size:19px;margin:12px 0}.negative{background:#463035;color:#ffc3c9;border-radius:12px;padding:14px 16px;font-weight:700;font-size:17px;margin:12px 0}.neutral{background:#303945;border-radius:12px;padding:14px 16px;color:#e1e6ee;margin:12px 0}.proxyInput{width:100%;border:1px solid #444a54;background:#14171b;color:white;border-radius:12px;padding:12px;margin-top:6px;font-size:13px}.meta{font-size:12px;color:#aab0bc}.field{padding:11px 0;border-bottom:1px solid #424650;overflow-wrap:anywhere}.field small{display:block;color:#aeb5c0;margin-bottom:4px;font-size:12px}.field strong{font-size:15px;font-weight:550}.detail{white-space:pre-wrap;overflow-wrap:anywhere;font:11px/1.5 ui-monospace,monospace;max-height:260px;overflow:auto}details{margin-top:12px}</style></head><body><main class="wrap"><div style="color:#929aa8;font-size:11px;letter-spacing:.16em">COCKTAIL ROOM · INDEPENDENT TEST</div><h1>Data Matrix Lab <span style="font-size:12px;font-weight:500;color:#93a0b4;letter-spacing:0">v9 · 06.11</span></h1><p>Проверяем, какие сведения содержит маркировка. Распознавание выполняется локально. Официальная проверка выполняется только по кнопке через отдельный HTTPS-сервер.</p>
+.verified{background:#076e52;color:white;border-radius:12px;padding:14px 16px;font-weight:750;font-size:19px;margin:12px 0}.negative{background:#463035;color:#ffc3c9;border-radius:12px;padding:14px 16px;font-weight:700;font-size:17px;margin:12px 0}.neutral{background:#303945;border-radius:12px;padding:14px 16px;color:#e1e6ee;margin:12px 0}.proxyInput{width:100%;border:1px solid #444a54;background:#14171b;color:white;border-radius:12px;padding:12px;margin-top:6px;font-size:13px}.meta{font-size:12px;color:#aab0bc}.field{padding:11px 0;border-bottom:1px solid #424650;overflow-wrap:anywhere}.field small{display:block;color:#aeb5c0;margin-bottom:4px;font-size:12px}.field strong{font-size:15px;font-weight:550}.detail{white-space:pre-wrap;overflow-wrap:anywhere;font:11px/1.5 ui-monospace,monospace;max-height:260px;overflow:auto}details{margin-top:12px}</style></head><body><main class="wrap"><div style="color:#929aa8;font-size:11px;letter-spacing:.16em">COCKTAIL ROOM · INDEPENDENT TEST</div><h1>Data Matrix Lab <span style="font-size:12px;font-weight:500;color:#93a0b4;letter-spacing:0">v10 · 06.11</span></h1><p>Проверяем, какие сведения содержит маркировка. Распознавание выполняется локально. Официальная проверка выполняется только по кнопке через отдельный HTTPS-сервер.</p>
 <section class="card"><h3>Сканер</h3><div class="view"><video id="video" playsinline autoplay muted></video><div class="guide"></div><span id="placeholder" class="hint">Нажми «Включить камеру»</span></div><div class="buttons"><button class="primary" id="start">Включить камеру</button><button id="stop">Остановить</button></div><div class="buttons"><label for="file" class="upload">Распознать с фотографии</label><input type="file" accept="image/*" id="file"></div><div id="status" class="status">Требуется HTTPS и разрешение на камеру.</div></section>
 <section class="card"><h3>Ручной ввод</h3><textarea id="manual" placeholder="Вставь считанную строку Data Matrix"></textarea><div class="buttons"><button id="parse">Разобрать</button><button id="demo">Тестовый код</button></div></section>
 <section class="card" id="resultCard" hidden><h3>Результат чтения</h3><div id="result"></div><p class="warning">Это проверка содержимого, НЕ подлинности. Для подтверждения официального статуса необходим запрос в систему маркировки.</p><div class="buttons"><button id="copy">Скопировать JSON</button></div></section>
-<section class="card" id="verificationCard"><h3>Официальная проверка Naqty Onim</h3><p class="small">Вычитываем сведения из официальной системы без регистрации. Нужен отдельный HTTPS-посредник, потому что мобильный сервер блокирует запросы напрямую из Safari.</p><label class="meta" for="proxyUrl">Адрес проверочного сервера (Cloudflare Worker)</label><input id="proxyUrl" class="proxyInput" type="url" autocomplete="url" inputmode="url" placeholder="https://datamatrix-check.ваш-поддомен.workers.dev"><div class="buttons"><button class="primary" id="officialCheck">Проверить подлинность</button></div><p class="meta" id="officialStatus">Сначала отсканируй Data Matrix: полный код содержит 29 символов. Можно также проверить 21-символьный идентификатор, но тогда проверочная часть отсутствует.</p><div id="officialSummary" hidden></div><details id="officialRaw" hidden><summary class="meta">Технический ответ сервера (для диагностики)</summary><pre class="detail" id="officialDetails"></pre></details><p class="meta">Название, статус и сведения о производителе отображаются только если они действительно присутствуют в ответе сервера. Достоверный результат требует официального ответа.</p></section>
+<section class="card" id="verificationCard"><h3>Официальная проверка Naqty Onim</h3><p class="small">Вычитываем сведения из официальной системы без регистрации. Нужен отдельный HTTPS-посредник, потому что мобильный сервер блокирует запросы напрямую из Safari.</p><label class="meta" for="proxyUrl">Адрес проверочного сервера (Cloudflare Worker)</label><input id="proxyUrl" class="proxyInput" type="url" autocomplete="url" inputmode="url" placeholder="https://datamatrix-check.ваш-поддомен.workers.dev"><div class="buttons"><button class="primary" id="officialCheck">Проверить подлинность</button></div><p class="meta" id="officialStatus">Сначала отсканируй Data Matrix: полный код содержит 29 символов. Можно также проверить 21-символьный идентификатор, но тогда проверочная часть отсутствует.</p><div id="officialSummary" hidden></div><details id="officialRaw" hidden><summary class="meta">Технический ответ сервера (для диагностики)</summary><pre class="detail" id="officialDetails"></pre></details><p class="meta">Теперь читаемые поля выводятся прямо из технического ответа. Остальные сведения доступны в раскрывающемся разделе; отсутствующие данные не выдумываются.</p></section>
 <section class="card"><h3>Приватность</h3><p class="small">Распознавание выполняется прямо на устройстве. Библиотека ZXing загружается при первом запуске с публичного CDN, поэтому нужен интернет. Изображения не отправляются. Только при нажатии «Проверить подлинность» код передаётся вашему Cloudflare Worker, а затем серверу Naqty Onim. Результаты не записываются в нашу базу.</p></section>
 </main><script>
 const $=id=>document.getElementById(id);let reader=null,active=false,last=null;
@@ -47,50 +47,82 @@ $('file').onchange=async e=>{const f=e.target.files?.[0];if(!f)return;try{status
 const proxyField=$('proxyUrl');
 proxyField.value=localStorage.getItem('datamatrix_lab_proxy_url')||'';
 proxyField.addEventListener('change',()=>localStorage.setItem('datamatrix_lab_proxy_url',proxyField.value.trim()));
-function findValue(obj,names,depth=0){
-  if(!obj||typeof obj!=='object'||depth>5)return null;
-  const entries=Object.entries(obj);
-  for(const name of names){
-    for(const [key,value] of entries){
-      if(key.toLowerCase()===name.toLowerCase() && value!==null && value!=='' && typeof value!=='object')return String(value);
-    }
+function flattenOfficial(obj,prefix='',out=[],depth=0){
+  if(!obj||typeof obj!=='object'||depth>8||out.length>300)return out;
+  for(const [key,value] of Object.entries(obj)){
+    const path=prefix?prefix+'.'+key:key;
+    if(value===null||value===undefined||value==='')continue;
+    if(typeof value==='object'){flattenOfficial(value,path,out,depth+1);continue;}
+    out.push({key,path,value:String(value)});
   }
-  for(const [key,value] of entries){
-    if(value&&typeof value==='object'){
-      const candidate=findValue(value,names,depth+1);
-      if(candidate)return candidate;
-    }
+  return out;
+}
+function findOfficial(items,names){
+  for(const name of names){
+    const exact=items.find(i=>i.key.toLowerCase()===name.toLowerCase());
+    if(exact)return exact;
   }
   return null;
 }
-function officialField(parent,label,value){
-  if(!value)return;
-  const field=document.createElement('div');field.className='field';
-  const small=document.createElement('small');small.textContent=label;
-  const strong=document.createElement('strong');strong.textContent=value;
-  field.append(small,strong);parent.append(field);
+function field(parent,label,value){
+ if(value===null||value===undefined||value==='')return;
+ const container=document.createElement('div');container.className='field';
+ const head=document.createElement('small');head.textContent=label;
+ const body=document.createElement('strong');body.textContent=String(value);
+ container.append(head,body);parent.append(container);
+}
+function dateOfficial(value){
+  if(!value)return null;
+  if(/^\\d{13}$/.test(value)){const d=new Date(Number(value));if(!isNaN(d.getTime()))return new Intl.DateTimeFormat('ru-RU',{timeZone:'Asia/Almaty',day:'2-digit',month:'2-digit',year:'numeric'}).format(d)}
+  if(/^\\d{4}-\\d{2}-\\d{2}/.test(value))return value.slice(0,10).split('-').reverse().join('.');
+  return value;
 }
 function showOfficial(response){
-  const summary=$('officialSummary');summary.replaceChildren();summary.hidden=false;
-  $('officialRaw').hidden=false;
-  $('officialDetails').textContent=JSON.stringify(response,null,2);
-  const data=response.data||{};
-  const result=data.checkResult===true && response.httpStatus>=200 && response.httpStatus<300;
-  const notFound=data.errorCode==='code_not_found';
-  const status=String(findValue(data,['statusCode','productStatus','status'])||'').toUpperCase();
-  const badge=document.createElement('div');badge.className=result?'verified':notFound?'negative':'neutral';
-  badge.textContent=result?'✓ Код подтверждён системой':notFound?'Код не найден в базе':'Официальный статус не подтверждён';
-  summary.append(badge);
-  const product=findValue(data,['productName','tradeName','tradeItemName','productFullName','nameRu','productTitle','productDescription','product_name','name']);
-  const statusText=({INTRODUCED:'В обороте',APPLIED:'Нанесён',RETIRED:'Выбыл',WITHDRAWN:'Выбыл из оборота'}[status]||status||null);
-  officialField(summary,'Торговое наименование товара',product);
-  officialField(summary,'Статус товара',statusText);
-  officialField(summary,'Тип упаковки',findValue(data,['packageType','packagingType','packageLevel','packType']));
-  officialField(summary,'Производитель / импортёр',findValue(data,['producerName','manufacturerName','manufacturer','importerName']));
-  officialField(summary,'Дата нанесения / производства',findValue(data,['productionDate','manufactureDate','applicationDate','appliedAt']));
-  officialField(summary,'Категория товара',findValue(data,['category']));
-  officialField(summary,'GTIN',findValue(data,['gtin','group01']));
-  if(data.message && !result)officialField(summary,'Сообщение сервера',data.message);
+ const summary=$('officialSummary');summary.replaceChildren();summary.hidden=false;
+ $('officialRaw').hidden=false;
+ $('officialDetails').textContent=JSON.stringify(response,null,2);
+ const data=response.data||{};
+ const items=flattenOfficial(data);
+ const matched=new Set();
+ const pick=(label,aliases,formatter)=>{
+   const match=findOfficial(items,aliases);
+   if(!match)return null;
+   matched.add(match.path);
+   const value=formatter?formatter(match.value):match.value;
+   field(summary,label,value);
+   return value;
+ };
+ const success=data.checkResult===true&&response.httpStatus>=200&&response.httpStatus<300;
+ const notFound=data.errorCode==='code_not_found';
+ const banner=document.createElement('div');
+ banner.className=success?'verified':notFound?'negative':'neutral';
+ banner.textContent=success?'✓ Код подлинный по данным Naqty Onim':notFound?'Код не найден в базе':'Проверка не подтверждена';
+ summary.append(banner);
+ // Prioritize the useful visible properties even if nested under core/specific.
+ pick('Торговое наименование товара',['productName','tradeName','tradeItemName','productFullName','tradeNameRu','nameRu','productTitle','productDescription','product_name','product_name_ru','goodName','goodsName','fullName','name']);
+ const rawStatus=findOfficial(items,['statusCode','productStatus','status','cisStatus','circulationStatus','turnoverStatus']);
+ if(rawStatus){
+   matched.add(rawStatus.path);
+   const original=rawStatus.value;
+   const statusDict={INTRODUCED:'В обороте',IN_CIRCULATION:'В обороте',APPLIED:'Нанесён',RETIRED:'Выбыл',WITHDRAWN:'Выбыл из оборота'};
+   field(summary,'Статус товара',statusDict[original.toUpperCase()]||original);
+ }
+ pick('Тип упаковки',['packageTypeName','packageType','packagingType','packageLevel','packType','packageKind']);
+ pick('Производитель / импортёр',['producerName','manufacturerName','manufacturer','importerName','producer','importer']);
+ pick('Дата нанесения / производства',['productionDate','manufactureDate','manufacturingDate','applicationDate','appliedAt','producedAt'],dateOfficial);
+ pick('Категория товара',['categoryName','category','productGroup']);
+ pick('Код товара (GTIN)',['gtin','group01','productCode']);
+ pick('Дата проверки',['checkDate'],dateOfficial);
+ if(data.message&&!success)pick('Сообщение системы',['message']);
+ // All remaining returned properties appear in a readable expandable section.
+ const excluded=new Set(['checkResult','questionableCode','correlationId','checkDate','errorCode','messageKey','rawCode','code','group21','serial','sid','userId','token','authorization','signature','checkCode']);
+ const rest=items.filter(i=>!matched.has(i.path)&&!excluded.has(i.key)&&!/token|secret|password|signature/i.test(i.key));
+ if(rest.length){
+   const extras=document.createElement('details');extras.style.marginTop='15px';
+   const summaryLabel=document.createElement('summary');summaryLabel.textContent='Остальные сведения из реестра ('+rest.length+')';extras.append(summaryLabel);
+   for(const item of rest)field(extras,item.path,item.value);
+   summary.append(extras);
+ }
 }
 $('officialCheck').onclick=async()=>{
   const statusEl=$('officialStatus'),btn=$('officialCheck');
